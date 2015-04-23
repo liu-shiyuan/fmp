@@ -765,6 +765,8 @@ DesignProcess.prototype = {
 
 var PublishProcess = function() {}
 PublishProcess.prototype = {
+    // 选择了的行
+    selected_rows: [],
     // 初始化splitter和右侧明细，创建确定table，并生成确认的
     init: function() {
         window.becameSplitter($('#mainSplitter_step6'),700)
@@ -776,22 +778,23 @@ PublishProcess.prototype = {
      *  @param {obj} obj - 创建的jqxgrid的对象名 
      */
     createVerifyTbl: function(obj) {
+        $this=this;
         $(document).ready(function () {
             var theme = 'classic';
             var source =
             {
                 datatype: "json",
                 datafields: [
-           { name: 'campaign_name', type: 'string' },
-           { name: 'delivery', type: 'int' },
-           { name: 'ad_set_name', type: 'string' },
-           { name: 'start', type: 'string' },
-           { name: 'end', type: 'string' },
-           { name: 'objective', type: 'string' },
-           { name: 'location', type: 'string' },
-           { name: 'age_from', type: 'int' },
-           { name: 'age_to', type: 'int' },
-           { name: 'gender', type: 'string' }
+                    { name: 'campaign_name', type: 'string' },
+                    { name: 'delivery', type: 'int' },
+                    { name: 'ad_set_name', type: 'string' },
+                    { name: 'start', type: 'string' },
+                    { name: 'end', type: 'string' },
+                    { name: 'objective', type: 'string' },
+                    { name: 'location', type: 'string' },
+                    { name: 'age_from', type: 'int' },
+                    { name: 'age_to', type: 'int' },
+                    { name: 'gender', type: 'string' }
                 ],
                 cache: false,
                 url: baseConf.api_prefix+'/get/campaign/@step6',
@@ -815,6 +818,11 @@ PublishProcess.prototype = {
                 editable: true,
                 selectionmode: 'checkbox',
                 rendergridrows: function (params) {
+                    $.each(params.data,function(k,v){
+                        // 收集当前打勾的行等待发布时传递
+                        $this.selected_rows.push(v)
+                    })
+                    console.log($this.selected_rows)
                     return params.data;
                 },
                 columns:
