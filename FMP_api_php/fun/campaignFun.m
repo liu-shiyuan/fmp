@@ -699,7 +699,7 @@ EOT;
                 break;
             }
             // 分页变量
-            $pagenum = $_GET['pagenum'];
+            $pagenum = isset($_GET['pagenum'])?$_GET['pagenum']:null;
             $pagesize = $_GET['pagesize'];
             $start = $pagenum * $pagesize;
             $select_table_query = "SELECT SQL_CALC_FOUND_ROWS * FROM {$temp_tbl_name} LIMIT $start, $pagesize;";

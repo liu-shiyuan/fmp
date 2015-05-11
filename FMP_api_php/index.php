@@ -9,7 +9,7 @@
   +----------------------------------------------------------------------+
   | Created:2011-02-22 10:41:44                                      
   +----------------------------------------------------------------------+
-  | Last-Modified: 2015-04-05 04:46:14
+  | Last-Modified: 2015-05-11 16:31:43
   +----------------------------------------------------------------------+
  */
 session_start();
@@ -31,7 +31,7 @@ include_once(__API_ROOT.'fun/safe.m');
 include_once(__API_ROOT.'fun/base.m');
 include_once(__API_ROOT.'fun/log.m');
 include_once(__API_ROOT.'lib/Predis.php');
-/* }}} */
+/* }}} /
 
 /* {{{ 初始化(载入配置等)
  * $GLOBALS['debugLevel'],debug级别

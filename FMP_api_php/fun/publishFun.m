@@ -36,26 +36,9 @@ if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
             $account_id='act_'.$_SESSION[__SESSION_CAMP_EDIT]['step1']['billingAccount'];
             $app_id=__FACEBOOK_APPID;
             $app_secret=__FACEBOOK_SECRET;
-            define('SDK_DIR','/home/yinjia/project/fmp/facebookprj_git/fmp/FMP_api_php/facebook_ads_api');
-            $loader = include SDK_DIR.'/vendor/autoload.php';
-            use FacebookAds\Api;
-            Api::init($app_id, $app_secret, $access_token);
-            use FacebookAds\Object\AdAccount;
-            use FacebookAds\Object\Fields\AdAccountFields;
-
-
-            $account = (new AdAccount($account_id))->read(array(
-                  AdAccountFields::ID,
-                    AdAccountFields::NAME,
-                      AdAccountFields::ACCOUNT_STATUS
-                  ));
-
-            echo "\nUsing this account: ";
-            echo $account->id."\n";
 
             foreach($_POST['commit_data'] as $publishInfo){
             }
-            echo "121212121212121";
             $GLOBALS['httpStatus']=__HTTPSTATUS_OK;
             echo json_encode($ret);
         }
