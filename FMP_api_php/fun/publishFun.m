@@ -36,6 +36,13 @@ if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
             $account_id='act_'.$_SESSION[__SESSION_CAMP_EDIT]['step1']['billingAccount'];
             $app_id=__FACEBOOK_APPID;
             $app_secret=__FACEBOOK_SECRET;
+            Api::init($app_id, $app_secret, $access_token);
+            $account = (new AdAccount($account_id))->read(array(
+                AdAccountFields::ID,
+                AdAccountFields::NAME,
+                AdAccountFields::ACCOUNT_STATUS
+            ));
+
 
             foreach($_POST['commit_data'] as $publishInfo){
             }

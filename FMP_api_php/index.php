@@ -26,7 +26,7 @@ include_once __API_ROOT.'inc/const.m';
 
 /* {{{ adsapi初始化
  */
-include_once __API_ROOT.'inc/adsapi_load.php';
+include_once __API_ROOT.'GPLlib/facebook_ads_api/vendor/autoload.php';
 /* }}} */
 
 /* {{{ 基础函数
