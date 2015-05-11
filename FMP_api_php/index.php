@@ -21,16 +21,21 @@ $conf = parse_ini_file(dirname(__FILE__).'/conf/api.conf'); //配置文件
 
 /* {{{ 载入常数
  */
-include_once(__API_ROOT.'inc/const.m');
+include_once __API_ROOT.'inc/const.m';
+/* }}} */
+
+/* {{{ adsapi初始化
+ */
+include_once __API_ROOT.'inc/adsapi_load.php';
 /* }}} */
 
 /* {{{ 基础函数
  */
-include_once(__API_ROOT.'fun/common.m');
-include_once(__API_ROOT.'fun/safe.m');
-include_once(__API_ROOT.'fun/base.m');
-include_once(__API_ROOT.'fun/log.m');
-include_once(__API_ROOT.'lib/Predis.php');
+include_once __API_ROOT.'fun/common.m';
+include_once __API_ROOT.'fun/safe.m';
+include_once __API_ROOT.'fun/base.m';
+include_once __API_ROOT.'fun/log.m';
+include_once __API_ROOT.'lib/Predis.php';
 /* }}} /
 
 /* {{{ 初始化(载入配置等)
@@ -39,7 +44,7 @@ include_once(__API_ROOT.'lib/Predis.php');
  * $GLOBALS['timeNow']
  * $GLOBALS['timeDesc']
  */
-include_once(__API_ROOT.'modules/initApi.m');
+include_once __API_ROOT.'modules/initApi.m';
 /* }}} */
 
 /* {{{ 分析请求,生成全局数组,加载需要的函数
@@ -54,7 +59,7 @@ include_once(__API_ROOT.'modules/initApi.m');
  * $GLOBALS['filterFields'],结果过滤相关信息
  */
 ob_start();
-include_once(__API_ROOT.'modules/parseRequest.m');
+include_once __API_ROOT.'modules/parseRequest.m';
 //die;
 /* }}} */
 
