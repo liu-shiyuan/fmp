@@ -792,6 +792,15 @@ PublishProcess.commit=function() {
                 alert("you check nothing!")
                 ret=false
             } else {
+                $.ajax({
+                    url: baseConf.api_prefix + "/get/publish/@self",
+                    method: "POST",
+                    data: {"commit_data":commitArr},
+                    async: false,
+                    success: function(data){
+                        console.log(data)
+                    }
+                })
                 ret=true
             }
         }
