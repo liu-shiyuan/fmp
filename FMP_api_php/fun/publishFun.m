@@ -13,6 +13,7 @@
   +----------------------------------------------------------------------+
 */
 $GLOBALS['httpStatus'] = __HTTPSTATUS_BAD_REQUEST; //默认返回400 
+date_default_timezone_set('PRC');
 header("Content-type: application/json; charset=utf-8");
 if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
     switch($GLOBALS['operation']) {
@@ -20,7 +21,10 @@ if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ret=null;
             $ret['status']="true";
+            print_r($_SESSION);
             print_r($_POST['commit_data']);
+            foreach($_POST['commit_data'] as $publishInfo){
+            }
             $GLOBALS['httpStatus']=__HTTPSTATUS_OK;
             echo json_encode($ret);
         }
