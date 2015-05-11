@@ -9,7 +9,7 @@
   +----------------------------------------------------------------------+
   | Created:2011-02-22 10:30:48                                          |
   +----------------------------------------------------------------------+
-  | Last-Modified: 2015-04-27 11:00:57
+  | Last-Modified: 2015-05-11 14:07:34
   +----------------------------------------------------------------------+
  */
 
@@ -17,16 +17,21 @@
 define('__VERSION','1.0');        //主版本号',代表主要功能分支
 define('__SUBVERSION','r1590');   //小版本号',即subversion版本号
 /* {{{ db mysql setting*/
-define('__DB_MYSQL_HOST', '127.0.0.1');
-define('__DB_MYSQL_PORT', '3306');
-define('__DB_MYSQL_USER', 'madcore');
-define('__DB_MYSQL_PASS', 'madcore');
-define('__DB_MYSQL_DB',   'fmp');
+list($mysql_host,$mysql_port)=isset($conf['mysql_host'])?explode(':',$conf['mysql_host']):array('localhost',11211);
+$mysql_user=isset($conf['mysql_user'])?$conf['mysql_user']:'madcore';
+$mysql_pass=isset($conf['mysql_pass'])?$conf['mysql_pass']:'madcore';
+$mysql_db=isset($conf['mysql_db'])?$conf['mysql_db']:'fmp';
+define('__DB_MYSQL_HOST', $mysql_host);
+define('__DB_MYSQL_PORT', $mysql_port);
+define('__DB_MYSQL_USER', $mysql_user);
+define('__DB_MYSQL_PASS', $mysql_pass);
+define('__DB_MYSQL_DB',   $mysql_db);
+unset($mysql_host,$mysql_port,$mysql_user,$mysql_pass,$mysql_db);
 /* }}} */
 
 list($memcache_host,$memcache_port)=isset($conf['memcache_host'])?explode(':',$conf['memcache_host']):array('localhost',11211);
-define(__MEMCACHE_HOST, $memcache_host);
-define(__MEMCACHE_PORT, $memcache_port);
+define('__MEMCACHE_HOST', $memcache_host);
+define('__MEMCACHE_PORT', $memcache_port);
 unset($memcache_host,$memcache_port);
 
 /* {{{ 物料地址 */
