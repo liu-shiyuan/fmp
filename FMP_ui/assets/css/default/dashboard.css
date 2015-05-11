@@ -364,13 +364,6 @@ body {
     float: left;
 }
 
-
-/*#form_camp_step5 #multi_product_jqxtabs .form-group {
-    padding-left: 20px;
-}*/
-/*#multi_product_jqxtabs  #unorderedList{
-    margin-left: 30px;
-}*/
 .jqx-tabs-content-element {
     padding: 20px;
     padding-bottom: 0;
@@ -398,4 +391,8 @@ body {
 
 #form_camp_step6 #jsProceed{
     margin-top: 20px;
+}
+
+#publish_h2{
+    color:#62c462;
 }

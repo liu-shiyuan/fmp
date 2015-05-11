@@ -86,7 +86,7 @@ $.when(
             switch (stp) {
               case("6"):
               // 每次进入需要计算切分
-              new PublishProcess().init()
+              window.publish_obj=new PublishProcess().init()
               break;
             }
         } else {
@@ -113,7 +113,7 @@ $.when(
                     break;
                     case("6"):
                     cache[url] = $.tmpl(gced["tpl_step" + stp], gced.publish).appendTo('#ad_edit_area');
-                    new PublishProcess().init()
+                    window.publish_obj=new PublishProcess().init()
                     break;
                 default:
                     cache[url] = $.tmpl(gced["tpl_step" + stp], gced.adaccounts).appendTo('#ad_edit_area');
@@ -763,8 +763,44 @@ DesignProcess.prototype = {
     }
 }
 
+/**
+ * Publish的类
+ */
 var PublishProcess = function() {}
+// 静态方法提交发布信息
+PublishProcess.commit=function() {
+    var t=_.first(window.publish_obj.total_rows)
+    var ret=false;
+    // 提交的同步数据准备完毕
+    $.ajax({
+        url: baseConf.api_prefix + "/get/campaign/@step6?pagesize="+t,
+        method: "GET",
+        async: false,
+        success: function(data) {
+            console.log(data)
+            var i=0;
+            var sri=$("#jqxgrid").jqxGrid('selectedrowindexes');
+            var commitArr=[];
+            $.each(data[0].Rows,function(k,v){
+                if (-1!=_.indexOf(sri,i)) {
+                    commitArr.push(v)
+                }
+                i++;
+            })
+            console.log(commitArr)
+            if (commitArr.length==0) {
+                alert("you check nothing!")
+                ret=false
+            } else {
+                ret=true
+            }
+        }
+    })
+    return ret
+}
+// 实例化的方法
 PublishProcess.prototype = {
+    total_rows: 0,
     // 选择了的行
     selected_rows: [],
     // 初始化splitter和右侧明细，创建确定table，并生成确认的
@@ -772,7 +808,8 @@ PublishProcess.prototype = {
         window.becameSplitter($('#mainSplitter_step6'),700)
         window.generateAtLeast()
         window.generateDetail()
-        this.createVerifyTbl($('#jqxgrid'));
+        this.createVerifyTbl($('#jqxgrid'))
+        return this
     },
     /** 创建确认表格
      *  @param {obj} obj - 创建的jqxgrid的对象名 
@@ -800,7 +837,7 @@ PublishProcess.prototype = {
                 url: baseConf.api_prefix+'/get/campaign/@step6',
                 root: 'Rows',
                 beforeprocessing: function (data) {
-                    source.totalrecords = data[0].TotalRows;
+                    $this.total_rows = source.totalrecords = data[0].TotalRows;
                 }
             };
             var dataadapter = new $.jqx.dataAdapter(source);
@@ -839,6 +876,15 @@ PublishProcess.prototype = {
                     { text: 'Gender', datafield: 'gender', width: 80 }
                 ]
             });
+            // 绑定发布按钮的点击事件 
+            $("#form_camp_step6 #jsProceed").on("click",function(){
+                $(this).html("Publishing Campaign...")
+                if (false==PublishProcess.commit()){
+                    $(this).html("Campaign Published Failed!")
+                } else {
+                    $(this).html("Campaign Successlly Published!").prop("disabled",true)
+                }
+            })
         });
     }
 }
