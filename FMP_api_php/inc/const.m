@@ -29,6 +29,10 @@ define('__DB_MYSQL_DB',   $mysql_db);
 unset($mysql_host,$mysql_port,$mysql_user,$mysql_pass,$mysql_db);
 /* }}} */
 
+/*{{{ facebook app设置*/
+define('__FACEBOOK_APPID', $conf['app_id']);
+define('__FACEBOOK_SECRET', $conf['app_secret']);
+/*}}}*/
 list($memcache_host,$memcache_port)=isset($conf['memcache_host'])?explode(':',$conf['memcache_host']):array('localhost',11211);
 define('__MEMCACHE_HOST', $memcache_host);
 define('__MEMCACHE_PORT', $memcache_port);
