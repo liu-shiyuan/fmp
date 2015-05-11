@@ -20,7 +20,7 @@ if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ret=null;
             $ret['status']="true";
-            print_r($_POST);
+            print_r($_POST['commit_data']);
             $GLOBALS['httpStatus']=__HTTPSTATUS_OK;
             echo json_encode($ret);
         }
