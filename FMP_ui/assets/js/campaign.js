@@ -987,7 +987,6 @@ window.generateDetail = function() {
             "connections": [],
             "friends_of_connections": [],
             "excluded_connections": [],
-            "targeted_entities": [],
             "wireless_carrier": [],
             "education_schools": [],
             "education_majors": [],
