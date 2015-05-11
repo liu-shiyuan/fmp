@@ -15,8 +15,8 @@
 session_start();
 ini_set('default_socket_timeout', 120);
 define(__API_ROOT,    dirname(__FILE__).'/');
-//error_reporting(E_ALL | E_STRICT);
-error_reporting(0);
+error_reporting(E_ALL | E_STRICT);
+//error_reporting(0);
 $conf = parse_ini_file(dirname(__FILE__).'/conf/api.conf'); //配置文件 
 
 /* {{{ 载入常数
@@ -31,7 +31,6 @@ include_once(__API_ROOT.'fun/safe.m');
 include_once(__API_ROOT.'fun/base.m');
 include_once(__API_ROOT.'fun/log.m');
 include_once(__API_ROOT.'lib/Predis.php');
-include_once(__API_ROOT.'fun/mq.m');
 /* }}} */
 
 /* {{{ 初始化(载入配置等)

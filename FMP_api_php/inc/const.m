@@ -229,7 +229,7 @@ $OBJECTIVE_ARR=array(
 
 
 //用户能创建最大的模板数目
-define(__FMP_MAX_USER_TMPL, 20);
+define('__FMP_MAX_USER_TMPL', 20);
 
 
 // 默认用户常量
@@ -269,5 +269,5 @@ if (!$conf['debug']) {
 // message queue
 
 // memcache的key
-define(__KEY_MEMCACHE_USER_PRODUCTX,"a|%s|%s"); // 第二位为uid，第三位为多产品的次序，如产品一为1，产品二2,依此类推
+define('__KEY_MEMCACHE_USER_PRODUCTX',"a|%s|%s"); // 第二位为uid，第三位为多产品的次序，如产品一为1，产品二2,依此类推
 ?>

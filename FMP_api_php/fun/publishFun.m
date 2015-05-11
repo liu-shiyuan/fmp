@@ -19,12 +19,43 @@ if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
     switch($GLOBALS['operation']) {
     case(__OPERATION_READ):
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $ret=null;
+            $ret=$access_token=null;
             $ret['status']="true";
             print_r($_SESSION);
             print_r($_POST['commit_data']);
+            // 获取access token
+            include(dirname(__FILE__).'/../inc/conn.php');
+            $query="SELECT access_token FROM t_fb_account WHERE ad_account_id=".$_SESSION[__SESSION_CAMP_EDIT]['step1']['billingAccount']." LIMIT 1;";
+            $result=$link->query($query);
+            if ( !($row = mysqli_fetch_assoc($result)) ) {
+                $msgs['err_msg'][]=array('accessToken' => 'access token wrong');
+            } else {
+                $access_token=$row['access_token'];
+            }
+            @mysqli_close($link);
+            $account_id='act_'.$_SESSION[__SESSION_CAMP_EDIT]['step1']['billingAccount'];
+            $app_id=__FACEBOOK_APPID;
+            $app_secret=__FACEBOOK_SECRET;
+            define('SDK_DIR','/home/yinjia/project/fmp/facebookprj_git/fmp/FMP_api_php/facebook_ads_api');
+            $loader = include SDK_DIR.'/vendor/autoload.php';
+            use FacebookAds\Api;
+            Api::init($app_id, $app_secret, $access_token);
+            use FacebookAds\Object\AdAccount;
+            use FacebookAds\Object\Fields\AdAccountFields;
+
+
+            $account = (new AdAccount($account_id))->read(array(
+                  AdAccountFields::ID,
+                    AdAccountFields::NAME,
+                      AdAccountFields::ACCOUNT_STATUS
+                  ));
+
+            echo "\nUsing this account: ";
+            echo $account->id."\n";
+
             foreach($_POST['commit_data'] as $publishInfo){
             }
+            echo "121212121212121";
             $GLOBALS['httpStatus']=__HTTPSTATUS_OK;
             echo json_encode($ret);
         }
