@@ -354,7 +354,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
             //age_from必须为0-100的数字,且必须不大于age_to,如果设置了age_to，必须设置age_from
             if (isset($_POST['age_to']) && !isset($_POST['age_from'])) {
                 $msgs['err_msg'][]=array('age_from'=>'must set age from if set age to');
-            } elseif (!in_array($age_from,range(0,100))) {
+            } elseif (!in_array($_POST['age_from'],range(0,100))) {
                 $msgs['err_msg'][]=array('age_from'=>'age from must from 0 to 100');
             } elseif ($_POST['age_from']>$_POST['age_to']) {
                 $msgs['err_msg'][]=array('age_from'=>'age from must less than age to');
@@ -364,7 +364,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
             //age_to必须为0-100的数字，且必须大于age_from,如果设置了age_from,必须设置age_to
             if (isset($_POST['age_from']) && !isset($_POST['age_to'])) {
                 $msgs['err_msg'][]=array('age_to'=>'must set age to if set age from');
-            } elseif(!in_array($age_to,range(0,100))) {
+            } elseif(!in_array($_POST['age_to'],range(0,100))) {
                 $msgs['err_msg'][]=array('age_to'=>'age to must from 0 to 100');
             } elseif ($_POST['age_to']<$_POST['age_from']) {
                 $msgs['err_msg'][]=array('age_to'=>'age to must large than age from');
@@ -545,7 +545,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP5) {
                 //'product_desc'=>'sina',
                 //'product_pic'=>'http://tp2.sinaimg.cn/2261192165/50/5628047497/1'
             //);
-            $ret=array(
+            $ret=@array(
                 'pages'=>$pages,
                 'messages'=>$messages,
                 'link'=>$link,
