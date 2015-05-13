@@ -549,7 +549,7 @@ DesignProcess.prototype = {
         $('#file_upload'+newTabId).uploadify({
             'multi': false,
             'queueSizeLimit': 1,
-            'fileTypeExts': '*.gif; *.jpg; *.png',
+            'fileTypeExts': '*.gif; *.jpg; *.jpeg; *.png',
             'buttonImage': '../../assets/img/transparent.gif',
             'buttonClass': 'uploadify_no_display',
             'wmode': 'transparent',
