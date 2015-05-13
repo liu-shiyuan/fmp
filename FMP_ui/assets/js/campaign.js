@@ -8,8 +8,8 @@ $(document).ready(function() {
             method: "GET",
             async: false,
             success: function(data) {
-                if (data.status == "false") { //没有登录退出
-                    location.href = "../"
+                if (data.status == "false") { // 没有登录退出
+                    location.href=baseConf.redirect_url+"not_login.html"
                 }
                 var user = [{
                     UserName: data.username
@@ -1017,8 +1017,8 @@ window.generateDetail = function() {
                 }]
             },
             success: function(data) {
-                if (data.status == "false") { //没有登录退出
-                    location.href = "../"
+                if (data.status == "false") { // 没有登录退出
+                    location.href=baseConf.redirect_url+"not_login.html"
                 }
                 item = ""
                 estimate_audience = "n/a"
