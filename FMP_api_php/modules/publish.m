@@ -119,6 +119,7 @@ echo $picLocationArr[0];
 
 $image->{AdImageFields::FILENAME}
   ='/tmp/FB-f-Logo__blue_512.png';
+  //= 'http://54.175.164.231/fmpapi1.0/get/images/05/96/dde5ba8bb2c36eaa08cf5b9035bbae34.jpg';
 
 
 $image->create();
@@ -142,6 +143,18 @@ $creative->setData(array(
 
 $creative->create();
 echo 'Creative ID: '.$creative->id . "\n";
+// 测试再加一个adcreative
+$creative2 = new AdCreative(null, $account->id);
+$creative2->setData(array(
+  AdCreativeFields::NAME => 'Sample Creative2',
+  AdCreativeFields::TITLE => "title2",
+  AdCreativeFields::BODY => "body2",
+  AdCreativeFields::IMAGE_HASH => $image->hash,
+  AdCreativeFields::OBJECT_URL => "http://www.google.com/" 
+));
+
+$creative2->create();
+echo 'Creative2 ID: '.$creative2->id . "\n";
 
 /**
  * Step 7 Create an AdGroup
@@ -161,5 +174,16 @@ $adgroup->setData(array(
 $adgroup->create();
 echo 'AdGroup ID:' . $adgroup->id . "\n";
 
+$adgroup2 = new AdGroup(null, $account->id);
+$adgroup2->setData(array(
+  AdGroupFields::CREATIVE =>
+    array('creative_id' => $creative2->id),
+  AdGroupFields::NAME => 'My Second AdGroup',
+  AdGroupFields::CAMPAIGN_ID => $adset->id,
+  AdGroupFields::ADGROUP_STATUS => 'ACTIVE'
+));
+
+$adgroup2->create();
+echo 'AdGroup2 ID:' . $adgroup2->id . "\n";
 
 
