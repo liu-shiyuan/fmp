@@ -162,8 +162,8 @@ function checkImgHashPerm($img_hash){
   */
 function getSplitedCampaigns(){
     global $OBJECTIVE_ARR;
-    list($start_mon,$start_day,$start_year)=explode('/',$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_start']);
-    list($end_mon,$end_day,$end_year)=explode('/',$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_end']);
+    @list($start_mon,$start_day,$start_year)=explode('/',@$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_start']);
+    @list($end_mon,$end_day,$end_year)=explode('/',@$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_end']);
     // 切分算法，如果有interval的，间隔的挖掉，用剩下的组成范围
     $demonsion=array(
         'age'=>null,

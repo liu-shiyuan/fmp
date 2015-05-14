@@ -44,17 +44,17 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP1) {
             @mysqli_close($link);
             $adaccounts=null;
             foreach($rows as $adaccountInfo) {
-                $selected=($_SESSION[__SESSION_CAMP_EDIT]['step1']['billingAccount']==$adaccountInfo['id'])?true:false;
+                $selected=@($_SESSION[__SESSION_CAMP_EDIT]['step1']['billingAccount']==$adaccountInfo['id'])?true:false;
                 $adaccounts[]=array('id'=>$adaccountInfo['id'],'name'=>$adaccountInfo['name'],'selected'=>"$selected");
             }
             $buyingType=null;
             foreach ($BYT_ARR as $buytype_name=>$buytype_desc){
-                $selected=$_SESSION[__SESSION_CAMP_EDIT]['step1']['buyingType']==$buytype_name?true:false;
+                $selected=@$_SESSION[__SESSION_CAMP_EDIT]['step1']['buyingType']==$buytype_name?true:false;
                 $buyingType[]=array('value'=>$buytype_name,'text'=>$buytype_desc,'selected'=>$selected);
             }
             $objective=null;
             foreach($AD_TYPES as $adtype=>$adtype_desc){
-                $selected=$_SESSION[__SESSION_CAMP_EDIT]['step1']['objective']==$adtype?true:false;
+                $selected=@$_SESSION[__SESSION_CAMP_EDIT]['step1']['objective']==$adtype?true:false;
                 $objective[]=array('value'=>$adtype,'text'=>$adtype_desc,'selected'=>$selected);
             }
             $dat=array(
@@ -204,7 +204,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
             if ($result=$link->query($query)) {
                 while ($row=mysqli_fetch_assoc($result)) {
                     if (empty($_GET['template_id'])) {
-                        $theTemplate=$_SESSION[__SESSION_CAMP_EDIT]['step3']['last_template_id']==$row['id']?
+                        $theTemplate=@$_SESSION[__SESSION_CAMP_EDIT]['step3']['last_template_id']==$row['id']?
                             array('id'=>$row['id'],'name'=>$row['name'],'selected'=>1):array('id'=>$row['id'],'name'=>$row['name'],'selected'=>0);
                     } else {
                         if($_GET['template_id']===$row['id']) {
@@ -231,9 +231,9 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
                     }
                 }
             } else {
-                foreach((array)explode('|',$_SESSION[__SESSION_CAMP_EDIT]['step3']['location']) as $lc){
+                foreach((array)explode('|',@$_SESSION[__SESSION_CAMP_EDIT]['step3']['location']) as $lc){
                     $fmp_loc_dic=include(dirname(__FILE__).'/../inc/location_map.php');
-                    $locArr[]=$fmp_loc_dic[$lc];
+                    $locArr[]=@$fmp_loc_dic[$lc];
                 }
                 $ret['fmplocation']=$locArr;
             }
@@ -243,7 +243,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
                 if (isset($selectedTemplateOption['age_to'])) {
                     $ret['age_to'][]=$selectedTemplateOption['age_to']==$i?array("id"=>$i,"name"=>$i,"selected"=>"selected"):
                         array("id"=>$i,"name"=>$i);
-                } elseif ($_SESSION[__SESSION_CAMP_EDIT]['step3']['age_to']==$i) {
+                } elseif (@$_SESSION[__SESSION_CAMP_EDIT]['step3']['age_to']==$i) {
                     $ret['age_to'][]=array("id"=>$i,"name"=>$i,"selected"=>"selected");
                 } else {
                     $ret['age_to'][]=array("id"=>$i,"name"=>$i);
@@ -251,7 +251,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
                 if (isset($selectedTemplateOption['age_from'])) {
                     $ret['age_from'][]=$selectedTemplateOption['age_from']==$i?array("id"=>$i,"name"=>$i,"selected"=>"selected"):
                         array("id"=>$i,"name"=>$i);
-                } elseif ($_SESSION[__SESSION_CAMP_EDIT]['step3']['age_from']==$i) {
+                } elseif (@$_SESSION[__SESSION_CAMP_EDIT]['step3']['age_from']==$i) {
                     $ret['age_from'][]=array("id"=>$i,"name"=>$i,"selected"=>"selected");
                 } else {
                     $ret['age_from'][]=array("id"=>$i,"name"=>$i);
@@ -262,7 +262,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
                 if (isset($selectedTemplateOption['age_split_interval'])) {
                     $ret['age_split_interval'][]=$selectedTemplateOption['age_split_interval']==$itv?
                         array('id'=>$itv,"name"=>$itv,'selected'=>'selected'):array('id'=>$itv,"name"=>$itv);
-                } elseif ($_SESSION[__SESSION_CAMP_EDIT]['step3']['age_split_interval']==$itv) {
+                } elseif (@$_SESSION[__SESSION_CAMP_EDIT]['step3']['age_split_interval']==$itv) {
                     $ret['age_split_interval'][]=array('id'=>$itv,"name"=>$itv,'selected'=>'selected');
                 } else {
                     $ret['age_split_interval'][]=array('id'=>$itv,"name"=>$itv);
@@ -271,7 +271,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
             if (isset($selectedTemplateOption['age_split'])) {
                 $ret['age_split']=($selectedTemplateOption['age_split'])?1:0;
             } else {
-                $ret['age_split']=($_SESSION[__SESSION_CAMP_EDIT]['step3']['age_split'])?1:0;
+                $ret['age_split']=@($_SESSION[__SESSION_CAMP_EDIT]['step3']['age_split'])?1:0;
             }
             $ret['gender'][]=array('id'=>__FMP_GENDER_ALL,'name'=>'all');
             $ret['gender'][]=array('id'=>__FMP_GENDER_MALE,'name'=>'male');
@@ -286,9 +286,9 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP3) {
             if (isset($selectedTemplateOption['gender_split'])) {
                 $ret['gender_split']=($selectedTemplateOption['gender_split'])?1:0;
             } else {
-                $ret['gender_split']=($_SESSION[__SESSION_CAMP_EDIT]['step3']['gender_split'])?1:0;
+                $ret['gender_split']=@($_SESSION[__SESSION_CAMP_EDIT]['step3']['gender_split'])?1:0;
             }
-            $ret['billing_account']=$_SESSION['camp_edit']['step1']['billingAccount'];
+            $ret['billing_account']=@$_SESSION['camp_edit']['step1']['billingAccount'];
             $st=empty($_SESSION[__SESSION_FMP_UID])?false:true;
             echo json_encode(array('data'=>$ret,'status'=>$st));
             $GLOBALS['httpStatus']=__HTTPSTATUS_OK;
@@ -431,9 +431,9 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP4) {
     case(__OPERATION_READ):
         if ($_SERVER['REQUEST_METHOD']=='GET') {
             $ret=array(
-                'budget'=>$_SESSION[__SESSION_CAMP_EDIT]['step4']['budget'],
-                'schedule_start'=>$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_start'],
-                'schedule_end'=>$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_end']
+                'budget'=>@$_SESSION[__SESSION_CAMP_EDIT]['step4']['budget'],
+                'schedule_start'=>@$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_start'],
+                'schedule_end'=>@$_SESSION[__SESSION_CAMP_EDIT]['step4']['schedule_end']
             );
             $GLOBALS['httpStatus']=__HTTPSTATUS_OK;
             $st=empty($_SESSION[__SESSION_FMP_UID])?false:true;
@@ -522,7 +522,7 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP5) {
                         $picData=base64_encode($row2['profile_pic']);
                         //主页的profile图片
                         if (isset($res2['primary_page'])) {
-                            $selected_flag=($res2['primary_page']['id']==$_SESSION[__SESSION_CAMP_EDIT]['step5']['selected_page'])?'true':'false';
+                            $selected_flag=($res2['primary_page']['id']==@$_SESSION[__SESSION_CAMP_EDIT]['step5']['selected_page'])?'true':'false';
                             $pages[]=array('id'=>$res2['primary_page']['id'],'name'=>$res2['primary_page']['name'],'imgbase64'=>"data:image/png;base64,{$picData}",'selected'=>$selected_flag);
                         }
                     }
@@ -530,9 +530,9 @@ if ($GLOBALS['selector'] == __SELECTOR_STEP5) {
             }
             @mysqli_close($link);
             
-            $messages=$_SESSION[__SESSION_CAMP_EDIT]['step5']['messages'];
-            $link=$_SESSION[__SESSION_CAMP_EDIT]['step5']['link'];
-            $productMulti=$_SESSION[__SESSION_CAMP_EDIT]['step5']['product_multi'];
+            $messages=@$_SESSION[__SESSION_CAMP_EDIT]['step5']['messages'];
+            $link=@$_SESSION[__SESSION_CAMP_EDIT]['step5']['link'];
+            $productMulti=@$_SESSION[__SESSION_CAMP_EDIT]['step5']['product_multi'];
             //$productMulti[]=array(
                 //'product_name'=>'a',
                 //'product_link'=>'http://www.baidu.com',

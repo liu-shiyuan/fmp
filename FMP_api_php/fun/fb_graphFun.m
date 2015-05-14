@@ -22,7 +22,7 @@ if ($GLOBALS['selector'] == __SELECTOR_SINGLE) {
             $batchAccessArr=$_POST['batch'];
             $access_token=null;
             include(dirname(__FILE__).'/../inc/conn.php');
-            $query="select access_token from t_fb_account where ad_account_id={$_SESSION['camp_edit']['step1']['billingAccount']} limit 1;";
+            $query=@"select access_token from t_fb_account where ad_account_id={$_SESSION['camp_edit']['step1']['billingAccount']} limit 1;";
             if ($result=$link->query($query)) {
                 $row=mysqli_fetch_assoc($result);
                 $access_token=$row['access_token'];
