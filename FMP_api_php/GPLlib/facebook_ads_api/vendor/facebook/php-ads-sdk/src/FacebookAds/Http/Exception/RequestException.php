@@ -125,7 +125,9 @@ class RequestException extends Exception {
       $errorData['error_subcode'], array(458, 459, 460, 463, 464, 467))
       || in_array($errorData['code'], array(100, 102, 190))
       || $errorData['type'] === 'OAuthException') {
-
+          /*{{{ add debuginfo*/
+          print_r($response_data);
+          /*}}}*/
       return new AuthorizationException($response_data, $status_code);
     } elseif (in_array($errorData['code'], array(1, 2))) {
 
