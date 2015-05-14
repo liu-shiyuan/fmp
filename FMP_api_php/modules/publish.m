@@ -59,8 +59,10 @@ $child_attachments = array();
 
 for($i = 1; $i <= 3; $i++) {
   $child_attachments[] = array(
+    AttachmentDataFields::NAME => 'product'.$i,
+    AttachmentDataFields::DESCRIPTION => '$'.$i.'00',
     AttachmentDataFields::LINK => 'http://photos.vigyaan.com/africa'.$i,
-    AttachmentDataFields::IMAGE_HASH => $image[$i]->hash,
+    AttachmentDataFields::IMAGE_HASH => $image[$i]->hash
   );
 }
 
@@ -70,17 +72,17 @@ for($i = 1; $i <= 3; $i++) {
 $object_story_spec = array(
   ObjectStorySpecFields::PAGE_ID => $page_id,
   ObjectStorySpecFields::LINK_DATA => array(
-    LinkDataFields::MESSAGE => 'Check out some pictures from Africa',
+    //LinkDataFields::MESSAGE => 'Check out some pictures from Africa',
     LinkDataFields::LINK => 'http://photos.vigyaan.com',
-    LinkDataFields::CAPTION => 'photos.vigyaan.com',
-    LinkDataFields::CHILD_ATTACHMENTS => $child_attachments,
+    LinkDataFields::CAPTION => 'http://photos.vigyaan.com',
+    LinkDataFields::CHILD_ATTACHMENTS => $child_attachments
 ));
 
 $creative = new AdCreative(null, $account_id);
 
 $creative->setData(array(
   AdCreativeFields::NAME => 'Africa Creative 1',
-  AdCreativeFields::OBJECT_STORY_SPEC => $object_story_spec,
+  AdCreativeFields::OBJECT_STORY_SPEC => $object_story_spec
 ));
 
 $creative->create();
