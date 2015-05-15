@@ -38,7 +38,8 @@ use FacebookAds\Object\Fields\AdGroupFields;
 Api::init($app_id, $app_secret, $access_token);
 echo $account_id;
 
-$page_id = "463893297084514";
+//$page_id = "1568648156711755";
+$page_id = "1596284443983918";
 //$pixel_id = "";
 
 // Upload Images
@@ -117,8 +118,9 @@ echo 'Creative ID: '.$creative_id ."\n";
 $campaign  = new AdCampaign(null, $account_id);
 $campaign->setData(array(
   AdCampaignFields::NAME => 'F8 Demo Campaign',
-  AdCampaignFields::OBJECTIVE => AdObjectives::WEBSITE_CONVERSIONS,
-  AdCampaignFields::STATUS => AdCampaign::STATUS_PAUSED,
+  //AdCampaignFields::OBJECTIVE => AdObjectives::WEBSITE_CONVERSIONS,
+  AdCampaignFields::OBJECTIVE => AdObjectives::WEBSITE_CLICKS,
+  AdCampaignFields::STATUS => AdCampaign::STATUS_PAUSED
 ));
 
 $campaign->validate()->create();
@@ -143,12 +145,13 @@ $adset->setData(array(
   AdSetFields::NAME => 'My First AdSet',
   AdSetFields::CAMPAIGN_GROUP_ID => $campaign_id,
   AdSetFields::CAMPAIGN_STATUS => AdSet::STATUS_ACTIVE,
-  AdSetFields::DAILY_BUDGET => '15000',
+  AdSetFields::DAILY_BUDGET => '5000',
   AdSetFields::TARGETING => $targeting,
-  //AdSetFields::BID_TYPE => BidTypes::BID_TYPE_ABSOLUTE_CPM,
-  //AdSetFields::BID_INFO => array(AdGroupBidInfoFields::IMPRESSIONS => 2),
-  AdSetFields::BID_TYPE => BidTypes::BID_TYPE_ABSOLUTE_OCPM,
-  AdSetFields::BID_INFO => array('ACTIONS' => 3000),
+  AdSetFields::BID_TYPE => BidTypes::BID_TYPE_CPM,
+  AdSetFields::BID_INFO => array(AdGroupBidInfoFields::IMPRESSIONS => 2),
+  //AdSetFields::BID_TYPE => BidTypes::BID_TYPE_ABSOLUTE_OCPM,
+  //AdSetFields::BID_INFO => array('ACTIONS' => 3000),
+  AdSetFields::PROMOTED_OBJECT => array('page_id' => $page_id),
   //AdSetFields::PROMOTED_OBJECT => array('pixel_id' => $pixel_id),
 ));
 
@@ -159,12 +162,26 @@ echo 'AdSet ID: '. $adset_id . "\n";
 // Create an ad
 // Each ad can only have one creative
 
+//$adgroup = new AdGroup(null, $account_id);
+//$adgroup->setData(array(
+  //AdGroupFields::CREATIVE => array('creative_id' => $creative_id),
+  //AdGroupFields::NAME => 'My First AdGroup',
+  //AdGroupFields::CAMPAIGN_ID => $adset_id,
+  //AdGroupFields::ADGROUP_STATUS => 'ACTIVE'
+//));
+
+
+echo "account_id:{$account_id}";
+echo "adset_id:{$adset_id}";
+echo "creative_id:{$creative_id}";
 $adgroup = new AdGroup(null, $account_id);
-$adgroup->setData(array(
-  AdGroupFields::CREATIVE => array('creative_id' => $creative_id),
-  AdGroupFields::NAME => 'My First AdGroup',
-  AdGroupFields::CAMPAIGN_ID => $adset_id,
-));
+$adgroup->{AdGroupFields::ADGROUP_STATUS} = AdGroup::STATUS_PAUSED;
+$adgroup->{AdGroupFields::NAME} = 'test adgroup';
+$adgroup->{AdGroupFields::CAMPAIGN_ID}=$adset_id;
+$adgroup->{AdGroupFields::CREATIVE} = array('creative_id' => $creative_id);
+
+
+
 
 $adgroup->create();
 $adgroup_id=$adgroup->id;
