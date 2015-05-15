@@ -38,8 +38,9 @@ use FacebookAds\Object\Fields\AdGroupFields;
 Api::init($app_id, $app_secret, $access_token);
 echo $account_id;
 
-//$page_id = "1568648156711755";
-$page_id = "463893297084514";
+//$page_id = "1568648156711755"; // 普通个人page没有意义
+//$page_id = "463893297084514"; // business page
+$page_id=@$_SESSION[__SESSION_CAMP_EDIT]['step5']['selected_page'];
 //$pixel_id = "";
 
 // Upload Images
@@ -116,8 +117,8 @@ echo 'Creative ID: '.$creative_id ."\n";
 // A campaign can have one or more adsets
 
 $campaign  = new AdCampaign(null, $account_id);
-$campaign->setData(array(
-  AdCampaignFields::NAME => 'F8 Demo Campaign',
+@$campaign->setData(array(
+  AdCampaignFields::NAME => $_SESSION[__SESSION_CAMP_EDIT] ['step1']['campaignName'],
   //AdCampaignFields::OBJECTIVE => AdObjectives::WEBSITE_CONVERSIONS,
   AdCampaignFields::OBJECTIVE => AdObjectives::WEBSITE_CLICKS,
   AdCampaignFields::STATUS => AdCampaign::STATUS_PAUSED
