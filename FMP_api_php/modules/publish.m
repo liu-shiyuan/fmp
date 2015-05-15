@@ -39,7 +39,7 @@ Api::init($app_id, $app_secret, $access_token);
 echo $account_id;
 
 //$page_id = "1568648156711755";
-$page_id = "1596284443983918";
+$page_id = "463893297084514";
 //$pixel_id = "";
 
 // Upload Images
